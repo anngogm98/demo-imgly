@@ -129,12 +129,13 @@ const config = {
     },
     // Import Design File
     //onLoad,
-    onLoad: (a) => {
-      window.alert("Load callback!");
-      const scene = "..."; // Fill with sene
-      console.log(a);
-      return Promise.resolve(scene);
-    },
+    onLoad: onLoad,
+    // (a) => {
+    //   window.alert("Load callback!");
+    //   const scene = "..."; // Fill with sene
+    //   console.log(a);
+    //   return Promise.resolve(scene);
+    // },
     // Export Images
     onExport: (blobs, options) => {
       console.log(options);
@@ -162,8 +163,12 @@ const config = {
     onDownload: (scene) => {
       // Cái này docs không có
       console.log(scene);
-      console.log(typeof scene);
-      window.alert("download callback!");
+      const blob = new Blob([scene], { type: "application/octet-stream" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "download.scene");
+      link.click();
     },
   },
 };
